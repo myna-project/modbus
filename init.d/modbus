@@ -1,0 +1,41 @@
+#! /bin/bash
+### BEGIN INIT INFO
+# Provides: modbus
+# Required-Start:    $syslog $remote_fs $network
+# Required-Stop:     $syslog $remote_fs $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Modbus daemon process
+# Description:    Runs up the Modbus daemon process
+### END INIT INFO
+
+# Activate the python virtual environment
+#    . /path_to_virtualenv/activate
+
+daemon="/home/pi/modbus/modbus.py"
+
+case "$1" in
+  start)
+    echo "Starting server"
+    # Start the daemon
+    python $daemon start
+    ;;
+  stop)
+    echo "Stopping server"
+    # Stop the daemon
+    python $daemon stop
+    ;;
+  restart)
+    echo "Restarting server"
+    python $daemon stop
+    sleep 3
+    python $daemon start
+    ;;
+  *)
+    # Refuse to do other stuff
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
+    ;;
+esac
+
+exit 0
